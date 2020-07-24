@@ -24,8 +24,7 @@ def get_prod_info(soup):
 
     try:
         reviews = soup.find('a', id='_rvwlnk').text
-        num_revs = [int(i) for i in reviews.split() if i.isdigit()]
-        final_revs = num_revs[0]
+        final_revs = reviews.partition(' product ratings')[0]
     except:
         final_revs = ''
 
@@ -39,7 +38,6 @@ def get_prod_info(soup):
             final_sold = check.join(num_sold)
         else:
             final_sold = num_sold[0]
-
     except:
         final_sold = ''
 
@@ -55,7 +53,6 @@ def get_prod_info(soup):
 
         if ',' in final_price:
             final_price = final_price.replace(',', '')
-
     except:
         final_price = ''
 
@@ -68,7 +65,6 @@ def get_prod_info(soup):
     }
 
     return data
-
 
 
 def get_links(soup):
@@ -138,18 +134,14 @@ def main():
         curr_page+=1
 
     if len(best_deals) >= 3:
-        best_deal = best_deals[-1]
-        second_best = best_deals[-2]
-        third_best = best_deals[-3]
-
-        webbrowser.open_new_tab(best_deal)
-        webbrowser.open_new_tab(second_best)
-        webbrowser.open_new_tab(third_best)
+        for i in range(1,4):
+            deals = best_deals[int('-' + str(i))]
+            webbrowser.open_new_tab(deals)
     else:
         best_deal = best_deals[-1]
         webbrowser.open_new_tab(best_deal)
 
 
-    
+
 if __name__ == '__main__':
     main()

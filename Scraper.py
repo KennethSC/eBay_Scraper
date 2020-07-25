@@ -116,7 +116,7 @@ def make_csv(query):
 # pages of a user input eBay search. Compares the data of each product
 # and returns the three cheapest products that have at least 10 reviews
 # or have been bought over 100 times. If less than three products meet the 
-# criteria above, then returns only one product that meets the criteria.
+# criteria above, then it returns the cheapest product that meets the criteria.
 def main():
 
     query = str(input("What product are you looking for? ")).replace(' ', '+')

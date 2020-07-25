@@ -6,7 +6,7 @@ import webbrowser
 from bs4 import BeautifulSoup
 
 # Parses the lxml page from teh given url
-# and returns the BeautifulSoup object
+# and returns the BeautifulSoup object.
 def get_page(url):
 
     response = requests.get(url)
@@ -16,7 +16,7 @@ def get_page(url):
 
 
 # Attempts to scrape the name, price, # of reviews,
-# and # sold of a product from eBay 
+# and # sold of a product from eBay. 
 def get_prod_info(soup):
 
     try:
@@ -86,7 +86,7 @@ def get_links(soup):
 
 # Writes to a created csv file each product's
 # name, price, # of reviews, # sold, and link
-# with each product's info being in one row
+# with each product's info being in one row.
 def write_to_csv(file, data, url):
 
     with open(file, 'a') as csvFile:
@@ -96,7 +96,7 @@ def write_to_csv(file, data, url):
 
 
 # Created a csv file and stores it in the users 
-# 'Documents' folder, also handles duplicate file names
+# 'Documents' folder, also handles duplicate file names.
 def make_csv(query):
 
     query = query.replace('+', '_')

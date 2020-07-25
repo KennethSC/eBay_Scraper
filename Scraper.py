@@ -95,7 +95,7 @@ def write_to_csv(file, data, url):
         write.writerow(rows)
 
 
-# Created a csv file and stores it in the users 
+# Creates a csv file and stores it in the users 
 # 'Documents' folder, also handles duplicate file names.
 def make_csv(query):
 

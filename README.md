@@ -4,7 +4,7 @@ Using the BeautifulSoup module, Scraper.py scrapes a product's name, price, link
 
 ## Requirements
 
-To install all the needed python packages, run this command in the directory that you stored the file requirements.txt: **pip install -r requirements.txt**
+To install all the needed python packages, run this command in the directory that you stored the file requirements.txt:  **pip install -r requirements.txt**
 
 ## Usage
 

@@ -5,17 +5,20 @@ import requests
 import webbrowser
 from bs4 import BeautifulSoup
 
-
+# Parses the lxml page from teh given url
+# and returns the BeautifulSoup object
 def get_page(url):
-    
+
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'lxml')
     
     return soup
 
 
+# Attempts to scrape the name, price, # of reviews,
+# and # sold of a product from eBay 
 def get_prod_info(soup):
-    
+
     try:
         final_name = soup.select("h1.it-ttl")[0].text.replace('\xa0', '').replace('Details about  ', '')
     except:
@@ -67,6 +70,8 @@ def get_prod_info(soup):
     return data
 
 
+# Scrapes all the links of each product's page
+# from a user input eBay search.
 def get_links(soup):
 
     try:
@@ -79,6 +84,9 @@ def get_links(soup):
     return urls
 
 
+# Writes to a created csv file each product's
+# name, price, # of reviews, # sold, and link
+# with each product's info being in one row
 def write_to_csv(file, data, url):
 
     with open(file, 'a') as csvFile:
@@ -87,6 +95,8 @@ def write_to_csv(file, data, url):
         write.writerow(rows)
 
 
+# Created a csv file and stores it in the users 
+# 'Documents' folder, also handles duplicate file names
 def make_csv(query):
 
     query = query.replace('+', '_')
@@ -102,6 +112,11 @@ def make_csv(query):
     return file_in_Docs
     
 
+# Scrapes the wanted data for each product in the first couple
+# pages of a user input eBay search. Compares the data of each product
+# and returns the three cheapest products that have at least 10 reviews
+# or have been bought over 100 times. If less than three products meet the 
+# criteria above, then returns only one product that meets the criteria.
 def main():
 
     query = str(input("What product are you looking for? ")).replace(' ', '+')
@@ -127,6 +142,7 @@ def main():
                     valid_item = False
 
             if data['price'] != '' and data['reviews'] != '' and valid_item:
+
                 converted_price = float(data['price'].replace('US $', ''))
                 num_revs = int(data['reviews'])
 
@@ -136,6 +152,7 @@ def main():
                     best_deals.append(link)
 
             elif data['price'] != '' and data['sold'] != '' and valid_item:
+
                 converted_price = float(data['price'].replace('US $', ''))
                 num_sold = int(data['sold'])
 

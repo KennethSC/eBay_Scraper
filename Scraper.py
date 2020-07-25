@@ -138,7 +138,7 @@ def main():
             valid_item = True
 
             for word in query_split:
-                if word.lower() not in data['name'].lower():
+                if word.lower() not in data['name'].lower().split():
                     valid_item = False
 
             if data['price'] != '' and data['reviews'] != '' and valid_item:

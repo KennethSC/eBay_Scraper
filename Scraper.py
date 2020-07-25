@@ -106,7 +106,7 @@ def make_csv(query):
     file_ctr = 1
     while os.path.isfile(file_in_Docs):
         new_name = str(query) + '(' + str(file_ctr) + ')' + '.csv'
-        file_in_Docs = os.path.join(os.path.expanduser('~'), 'Documents', str(new_name) + '.csv')
+        file_in_Docs = os.path.join(os.path.expanduser('~'), 'Documents', str(new_name))
         file_ctr+=1
 
     return file_in_Docs

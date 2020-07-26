@@ -8,4 +8,4 @@ To install all the needed python packages, run this command in the directory tha
 
 ## Usage
 
-Just run Scraper.py in any python3 interpreter and input the product you would like to search for when prompted. To access the created .csv file, just go to your 'Documents' folder and look for a .csv file that is named after the product you searched for.
+Just run Scraper.py in any python interpreter and input the product you would like to search for when prompted. To access the created .csv file, just go to your 'Documents' folder and look for a .csv file that is named after the product you searched for.

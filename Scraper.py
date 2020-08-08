@@ -35,12 +35,9 @@ def get_prod_info(soup):
     try:
         sold = soup.find('a', class_='vi-txt-underline').text
         num_sold = re.findall(r'\d+', sold)
-
-        if len(num_sold) > 1:
-            check = ""
-            final_sold = check.join(num_sold)
-        else:
-            final_sold = num_sold[0]
+        check = ''
+        
+        final_sold = check.join(num_sold) if len(num_sold) > 1 else num_sold[0]
     except:
         final_sold = ''
 
@@ -115,13 +112,11 @@ def make_csv(query):
 # Scrapes the wanted data for each product in the first couple
 # pages of a user input eBay search. Compares the data of each product
 # and returns the three cheapest products that have at least 10 reviews
-# or have been bought over 100 times. If less than three products meet the 
-# criteria above, then it returns the cheapest product that meets the criteria.
+# or have been bought over 100 times.
 def main():
 
     query = str(input("What product are you looking for? ")).replace(' ', '+')
     query_split = query.split('+')
-    min = second_min = float('inf')
     curr_page, num_pages = 1, 3
 
     best_deals = []
@@ -135,42 +130,34 @@ def main():
         for link in links:
             data = get_prod_info(get_page(link))
             write_to_csv(csv_name, data, link)
+            name = data['name'].lower().split() 
             valid_item = True
 
             for word in query_split:
-                if word.lower() not in data['name'].lower().split():
+                if word.lower() not in name:
                     valid_item = False
 
             if data['price'] != '' and data['reviews'] != '' and valid_item:
-
                 converted_price = float(data['price'].replace('US $', ''))
-                num_revs = int(data['reviews'])
+                data['price'] = converted_price
+                data['link'] = str(link)
 
-                if (converted_price <= min or converted_price <= second_min) and num_revs > 10:
-                    second_min = min
-                    min = converted_price
-                    best_deals.append(link)
+                if int(data['reviews']) >= 10: best_deals.append(data)
 
             elif data['price'] != '' and data['sold'] != '' and valid_item:
-
                 converted_price = float(data['price'].replace('US $', ''))
-                num_sold = int(data['sold'])
+                data['price'] = converted_price
+                data['link'] = str(link)
 
-                if (converted_price <= min or converted_price <= second_min) and num_sold > 100:
-                    second_min = min
-                    min = converted_price
-                    best_deals.append(link)
+                if int(data['sold']) >= 100: best_deals.append(data)
 
         curr_page+=1
 
-    if len(best_deals) >= 3:
-        for i in range(1,4):
-            deals = best_deals[int('-' + str(i))]
-            webbrowser.open_new_tab(deals)
-    else:
-        best_deal = best_deals[-1]
-        webbrowser.open_new_tab(best_deal)
+    best_deals.sort(key=lambda x: x['price'], reverse=False)
 
+    for i in range (0,3):
+        deals = best_deals[i]
+        webbrowser.open_new_tab(deals['link'])
 
 
 if __name__ == '__main__':

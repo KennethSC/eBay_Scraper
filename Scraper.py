@@ -149,7 +149,7 @@ def main():
                 data['price'] = converted_price
                 data['link'] = str(link)
 
-                if int(data['sold']) >= 100: best_deals.append(data)
+                if int(data['sold']) >= 50: best_deals.append(data)
 
         curr_page+=1
 

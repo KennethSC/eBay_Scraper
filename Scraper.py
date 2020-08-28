@@ -21,14 +21,14 @@ def get_prod_info(soup):
 
     try:
         final_name = soup.select("h1.it-ttl")[0].text.replace('\xa0', '').replace('Details about  ', '')
-    except:
+    except Exception:
         final_name = ''
 
 
     try:
         reviews = soup.find('a', id='_rvwlnk').text
         final_revs = re.findall(r'\d+', reviews)[0]
-    except:
+    except Exception:
         final_revs = ''
 
 
@@ -38,14 +38,14 @@ def get_prod_info(soup):
         check = ''
         
         final_sold = check.join(num_sold) if len(num_sold) > 1 else num_sold[0]
-    except:
+    except Exception:
         final_sold = ''
 
 
     try:
         try: 
             final_price = soup.find('span', id='prcIsum').text
-        except:
+        except Exception:
             final_price = soup.find('span', id='mm-saleDscPrc').text
 
         if '/ea' in final_price:
@@ -53,7 +53,7 @@ def get_prod_info(soup):
 
         if ',' in final_price:
             final_price = final_price.replace(',', '')
-    except:
+    except Exception:
         final_price = ''
 
 
@@ -73,7 +73,7 @@ def get_links(soup):
 
     try:
         links = soup.find_all('a', class_='s-item__link')
-    except:
+    except Exception:
         links = []
 
     urls = [url.get('href') for url in links]

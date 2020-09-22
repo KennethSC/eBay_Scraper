@@ -136,6 +136,7 @@ def main():
             for word in query_split:
                 if word.lower() not in name:
                     valid_item = False
+                    break
 
             if data['price'] != '' and data['reviews'] != '' and valid_item:
                 converted_price = float(data['price'].replace('US $', ''))
